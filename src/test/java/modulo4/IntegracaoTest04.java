@@ -17,5 +17,44 @@ import java.util.List;
 
 public class IntegracaoTest04 {
 
+    @Test
+    public void listarEstudantesFromPessoas(){
+        ListaPessoas listaPessoas = Mockito.mock(ListaPessoas.class);
+        Mockito.when(listaPessoas.getPessoas()).thenReturn(Arrays.asList(new Estudante(),new Estudante(),new Professor(),new Professor(),new Estudante(),new Gerente(),new Estudante(),new Estudante(),new Bibliotecario()));
+        List<Estudante> estudantes = new ArrayList<Estudante>();
+
+        listaPessoas.getPessoas().forEach(p -> {
+            if(p.getClass() == Estudante.class){
+                estudantes.add((Estudante) p);
+            }
+        });
+
+        Assertions.assertEquals(5, estudantes.size());
+    }
+
+    @Test
+    public void listarEstudantesFromPessoaInexistente(){
+        ListaPessoas listaPessoas = Mockito.mock(ListaPessoas.class);
+        Mockito.when(listaPessoas.getPessoas()).thenReturn(Arrays.asList(new Professor(),new Professor(),new Gerente(),new Bibliotecario()));
+        List<Estudante> estudantes = new ArrayList<Estudante>();
+
+        listaPessoas.getPessoas().forEach(p -> {
+            if(p.getClass() == Estudante.class){
+                estudantes.add((Estudante) p);
+            }
+        });
+
+        Assertions.assertEquals(0, estudantes.size());
+    }
+
+
+    @Test
+    public void agruparLivrosByName(){
+        ListaLivros listaLivros = Mockito.mock(ListaLivros.class);
+        Mockito.when(listaLivros.groupNyName("Use a cabeça!")).thenReturn(Livro.findAll());
+        Assertions.assertEquals(0, listaLivros.groupNyName("Use a cabeça!").size());
+        Mockito.verify(listaLivros, Mockito.atMost(0)).getLivros();
+    }
+
 
 }
