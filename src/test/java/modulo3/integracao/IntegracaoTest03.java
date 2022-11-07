@@ -49,5 +49,4 @@ public class IntegracaoTest03 {
 
         Assertions.assertEquals("São Cristovão", bibliotecaList.get(0).getNome());
     }
-
 }
